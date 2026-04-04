@@ -6,8 +6,8 @@ import Palani from "../../assets/Golden hour at Palani temple.png";
 const slides = [
   {
     id: 1,
-    title: "SANA TRAVEL",
-    highlight: "REFINED.",
+    title: "SANA TOURS",
+    highlight: "& TRAVELS",
     desc: "Experience the gold standard of luxury mobility in Palani. Punctuality meets premium comfort.",
     img: "https://wallpapercave.com/wp/wp9777779.jpg",
   },
