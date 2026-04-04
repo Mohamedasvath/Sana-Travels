@@ -11,6 +11,8 @@ const trips = [
   { id: 2, place: "Madurai", subtitle: "Temple City Tour", distance: "120 KM", time: "2.5 Hrs", price: "₹4500", rating: "4.8", image: "https://i.ytimg.com/vi/uGHfjT_ny8Q/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBAXXTOZ-qL7kRBiQvNeuTGRHrkcA" },
   { id: 3, place: "Coimbatore", subtitle: "City Ride", distance: "110 KM", time: "2.5 Hrs", price: "₹4500", rating: "4.7", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx0Yn6tgDsA8zHN1f6020IPq2zvdjG2D1x4A&s" },
   { id: 4, place: "Ooty", subtitle: "Hill Escape", distance: "220 KM", time: "6 Hrs", price: "₹6500", rating: "4.9", image: "https://static.wixstatic.com/media/012323_7be29c92ca6d459b95df381c072f09d5~mv2.jpg/v1/fill/w_568,h_320,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/012323_7be29c92ca6d459b95df381c072f09d5~mv2.jpg" },
+    { id: 5, place: "Dindigul", subtitle: "Higway Ride", distance: "60 KM", time: "6 Hrs", price: "₹2500", rating: "4.9", image: "https://i0.wp.com/aravindgundumane.com/wp-content/uploads/2023/01/Middle-section-of-the-fort.jpg?resize=1140%2C760&ssl=1" },
+      { id: 5, place: "Trichy", subtitle: "Higway Ride", distance: "170 KM", time: "6 Hrs", price: "₹6000", rating: "4.9", image: "https://bharathconstructions.com/wp-content/uploads/2024/07/trichy-new-airport-bharath-flat.webp" },
 ];
 
 const Trip = () => {
