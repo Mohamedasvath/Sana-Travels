@@ -73,8 +73,8 @@ const Footer = () => {
                 <Phone size={16} /> +91 63811 38159
               </a>
 
-              <a href="mailto:sana.travels@gmail.com" className="flex items-center gap-3 hover:text-white transition">
-                <Mail size={16} /> sana.travels@gmail.com
+              <a href="mailto:Sajakan256@gmail.com " className="flex items-center gap-3 hover:text-white transition">
+                <Mail size={16} /> Sajakan256@gmail.com 
               </a>
 
               <div className="flex items-start gap-3">
@@ -118,7 +118,7 @@ const Footer = () => {
           <div className="flex items-center gap-2 text-[10px] text-white/40 uppercase tracking-[0.2em]">
             <span>Made with</span>
             <Heart size={12} className="text-red-600 fill-red-600 animate-pulse" />
-            <span>by Code Spark ❤️</span>
+            <span>by Code Spark </span>
           </div>
 
         </div>

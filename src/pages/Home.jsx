@@ -68,7 +68,7 @@ const Preloader = () => {
           </div>
           <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden">
             <motion.div 
-              className="absolute inset-0 bg-red-600 origin-left"
+              className="absolute inset-0 bg-white origin-left"
               style={{ scaleX: progress / 100 }}
             />
           </div>
