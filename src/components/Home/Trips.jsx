@@ -8,61 +8,75 @@ import { MapPin, ArrowRight, Clock, Star, Zap } from "lucide-react";
 
 const trips = [
   { id: 1, place: "Kodaikanal", subtitle: "Hill Station Trip", distance: "115 KM", time: "3.5 Hrs", price: "₹4000", rating: "4.9", image: "https://kodaikanaltourism.co.in/images/v2/packages/kodaikanal-climate-header.jpg" },
-  { id: 2, place: "Madurai", subtitle: "Temple City Tour", distance: "120 KM", time: "2.5 Hrs", price: "₹4500", rating: "4.8", image: "https://i.ytimg.com/vi/uGHfjT_ny8Q/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBAXXTOZ-qL7kRBiQvNeuTGRHrkcA" },
+  { id: 2, place: "Madurai", subtitle: "Temple City Tour", distance: "120 KM", time: "2.5 Hrs", price: "₹4500", rating: "4.8", image: "https://i.ytimg.com/vi/uGHfjT_ny8Q/hq720.jpg" },
   { id: 3, place: "Coimbatore", subtitle: "City Ride", distance: "110 KM", time: "2.5 Hrs", price: "₹4500", rating: "4.7", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx0Yn6tgDsA8zHN1f6020IPq2zvdjG2D1x4A&s" },
-  { id: 4, place: "Ooty", subtitle: "Hill Escape", distance: "220 KM", time: "6 Hrs", price: "₹6500", rating: "4.9", image: "https://static.wixstatic.com/media/012323_7be29c92ca6d459b95df381c072f09d5~mv2.jpg/v1/fill/w_568,h_320,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/012323_7be29c92ca6d459b95df381c072f09d5~mv2.jpg" },
-    { id: 5, place: "Dindigul", subtitle: "Higway Ride", distance: "60 KM", time: "6 Hrs", price: "₹2500", rating: "4.9", image: "https://i0.wp.com/aravindgundumane.com/wp-content/uploads/2023/01/Middle-section-of-the-fort.jpg?resize=1140%2C760&ssl=1" },
-      { id: 5, place: "Trichy", subtitle: "Higway Ride", distance: "170 KM", time: "6 Hrs", price: "₹6000", rating: "4.9", image: "https://bharathconstructions.com/wp-content/uploads/2024/07/trichy-new-airport-bharath-flat.webp" },
+  { id: 4, place: "Ooty", subtitle: "Hill Escape", distance: "220 KM", time: "6 Hrs", price: "₹6500", rating: "4.9", image: "https://static.wixstatic.com/media/012323_7be29c92ca6d459b95df381c072f09d5~mv2.jpg" },
+  { id: 5, place: "Dindigul", subtitle: "Highway Ride", distance: "60 KM", time: "1.5 Hrs", price: "₹2500", rating: "4.6", image: "https://i0.wp.com/aravindgundumane.com/wp-content/uploads/2023/01/Middle-section-of-the-fort.jpg" },
+  { id: 6, place: "Trichy", subtitle: "Temple Visit", distance: "170 KM", time: "4 Hrs", price: "₹6000", rating: "4.8", image: "https://bharathconstructions.com/wp-content/uploads/2024/07/trichy-new-airport-bharath-flat.webp" },
 ];
 
 const Trip = () => {
   const x = useMotionValue(0);
   const containerRef = useRef(null);
+  const [width, setWidth] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   const duplicated = [...trips, ...trips];
 
+  // ✅ Calculate dynamic width
+  useEffect(() => {
+    if (containerRef.current) {
+      setWidth(containerRef.current.scrollWidth / 2);
+    }
+  }, []);
+
+  // ✅ Smooth auto scroll
   useEffect(() => {
     let controls;
 
-    const startAuto = () => {
-      const width = containerRef.current.scrollWidth / 2;
-
+    if (!isDragging && width > 0) {
       controls = animate(x, [x.get(), -width], {
-        duration: 25,
         ease: "linear",
+        duration: 30,
         repeat: Infinity,
-        onUpdate: (latest) => {
-          if (latest <= -width) {
-            x.set(0);
-          }
-        }
+        repeatType: "loop"
       });
-    };
-
-    if (!isDragging) startAuto();
+    }
 
     return () => controls && controls.stop();
-  }, [isDragging, x]);
+  }, [isDragging, width]);
+
+  // ✅ Reset loop properly
+  useEffect(() => {
+    const unsubscribe = x.on("change", (latest) => {
+      if (latest <= -width) {
+        x.set(0);
+      }
+      if (latest > 0) {
+        x.set(-width);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [width]);
 
   const handleBooking = (place) => {
     const msg = encodeURIComponent(
       `Hi Sana Travels, I want to book a trip to ${place}`
     );
-    window.open(`https://wa.me/919344790389?text=${msg}`);
+    window.open(`https://wa.me/916381138159?text=${msg}`);
   };
 
   return (
-    <section className="bg-black text-white py-28 px-6 lg:px-20 overflow-hidden">
+    <section className="bg-black text-white py-24 px-4 md:px-10 overflow-hidden">
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}
-        <div className="mb-16">
-          <span className="text-red-500 text-xs tracking-widest uppercase flex items-center gap-2 mb-4">
+        <div className="mb-12">
+          <span className="text-red-500 text-xs tracking-widest uppercase flex items-center gap-2 mb-3">
             <Zap size={14} /> Premium Trips
           </span>
-
-          <h2 className="text-4xl md:text-6xl font-extrabold">
+          <h2 className="text-3xl md:text-5xl font-extrabold">
             Explore Top Destinations
           </h2>
         </div>
@@ -70,23 +84,24 @@ const Trip = () => {
         {/* CAROUSEL */}
         <div className="relative overflow-hidden">
 
-          {/* GRADIENT EDGES */}
-          <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-black to-transparent z-10" />
-          <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-black to-transparent z-10" />
+          {/* FADE EDGES */}
+          <div className="absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-black to-transparent z-10" />
+          <div className="absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-black to-transparent z-10" />
 
           <motion.div
             ref={containerRef}
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: -1000, right: 0 }}
+            dragConstraints={{ left: -width, right: 0 }} // ✅ FIXED
+            dragElastic={0.05} // smooth drag
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => setIsDragging(false)}
-            className="flex gap-6 cursor-grab active:cursor-grabbing"
+            className="flex gap-5 cursor-grab active:cursor-grabbing"
           >
             {duplicated.map((trip, i) => (
               <div
                 key={i}
-                className="min-w-[280px] md:min-w-[320px] h-[420px] rounded-[30px] overflow-hidden relative group border border-white/10"
+                className="min-w-[260px] md:min-w-[300px] h-[400px] rounded-[25px] overflow-hidden relative group border border-white/10"
               >
                 {/* IMAGE */}
                 <img
@@ -99,9 +114,9 @@ const Trip = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
                 {/* CONTENT */}
-                <div className="relative p-6 flex flex-col justify-end h-full">
+                <div className="relative p-5 flex flex-col justify-end h-full">
 
-                  <div className="flex justify-between mb-3">
+                  <div className="flex justify-between mb-2">
                     <span className="bg-white text-black px-3 py-1 rounded-full text-xs font-bold">
                       {trip.price}
                     </span>
@@ -111,23 +126,23 @@ const Trip = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-bold">{trip.place}</h3>
-                  <p className="text-sm text-gray-400 mb-3">{trip.subtitle}</p>
+                  <h3 className="text-xl font-bold">{trip.place}</h3>
+                  <p className="text-xs text-gray-400 mb-2">{trip.subtitle}</p>
 
-                  <div className="flex gap-4 text-xs text-gray-300 mb-4">
+                  <div className="flex gap-3 text-[10px] text-gray-300 mb-3">
                     <span className="flex items-center gap-1">
-                      <MapPin size={12} /> {trip.distance}
+                      <MapPin size={10} /> {trip.distance}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Clock size={12} /> {trip.time}
+                      <Clock size={10} /> {trip.time}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleBooking(trip.place)}
-                    className="bg-white text-black py-3 rounded-full text-sm font-bold flex items-center justify-center gap-2 hover:bg-red-600 hover:text-white transition"
+                    className="bg-white text-black py-2 rounded-full text-xs font-bold flex items-center justify-center gap-2 hover:bg-red-600 hover:text-white transition"
                   >
-                    Book Now <ArrowRight size={16} />
+                    Book Now <ArrowRight size={14} />
                   </button>
 
                 </div>

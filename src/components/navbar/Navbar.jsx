@@ -5,7 +5,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Handle scroll effect
+  // ✅ Scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -14,9 +14,29 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [];
+  // ✅ ONLY MAIN SECTIONS
+  const navItems = [
+    { label: "Home", id: "home" },
+    { label: "Trips", id: "trips" },
+    { label: "Pricing", id: "pricing" },
+    { label: "Contact", id: "contact" },
+  ];
 
-  // 📞 Your phone number
+  // ✅ SCROLL FUNCTION (PERFECT FOR MOBILE)
+  const handleScroll = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      const yOffset = -80; // navbar height adjust
+      const y =
+        section.getBoundingClientRect().top +
+        window.pageYOffset +
+        yOffset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+      setOpen(false); // close mobile menu
+    }
+  };
+
   const phoneNumber = "tel:+916381138159";
 
   return (
@@ -30,44 +50,44 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
 
         {/* LOGO */}
-        <a href="#" className="group flex items-center gap-2">
-          <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm group-hover:rotate-12 transition-transform">
+        <button
+          onClick={() => handleScroll("home")}
+          className="flex items-center gap-2"
+        >
+          <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
             <span className="text-black font-black text-xs">S</span>
           </div>
-          <div className="text-xl font-bold tracking-tighter text-white">
-            SANA <span className="text-gray-400 font-light italic">TRAVELS</span>
+          <div className="text-xl font-bold text-white">
+            SANA <span className="text-gray-400 italic">TRAVEL</span>
           </div>
-        </a>
+        </button>
 
-        {/* DESKTOP MENU */}
+        {/* DESKTOP */}
         <div className="hidden md:flex items-center gap-10">
-          <div className="flex gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </div>
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleScroll(item.id)}
+              className="text-sm text-gray-300 hover:text-white transition"
+            >
+              {item.label}
+            </button>
+          ))}
 
-          {/* CALL BUTTON */}
+          {/* CALL */}
           <a
             href={phoneNumber}
-            className="flex items-center gap-2 px-6 py-2.5 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-white/5"
+            className="flex items-center gap-2 px-6 py-2.5 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200"
           >
             <Phone size={16} />
             Call Now
           </a>
         </div>
 
-        {/* MOBILE BUTTON */}
+        {/* MOBILE MENU BTN */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition"
+          className="md:hidden text-white"
         >
           {open ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -75,26 +95,25 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden transition-all duration-300 ${
-          open ? "max-h-[500px] opacity-100 py-8" : "max-h-0 opacity-0 py-0"
+        className={`md:hidden bg-black/95 backdrop-blur-xl transition-all duration-300 ${
+          open ? "max-h-[400px] py-6" : "max-h-0 overflow-hidden"
         }`}
       >
         <div className="flex flex-col items-center gap-6">
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="text-lg font-medium text-gray-300 hover:text-white"
+            <button
+              key={item.id}
+              onClick={() => handleScroll(item.id)}
+              className="text-lg text-gray-300 hover:text-white"
             >
               {item.label}
-            </a>
+            </button>
           ))}
 
-          {/* MOBILE CALL BUTTON */}
+          {/* CALL BUTTON */}
           <a
             href={phoneNumber}
-            className="flex items-center justify-center gap-2 mt-4 px-10 py-3 bg-white text-black rounded-full font-bold w-[80%]"
+            className="flex items-center gap-2 px-10 py-3 bg-white text-black rounded-full font-bold"
           >
             <Phone size={18} />
             Call Now
