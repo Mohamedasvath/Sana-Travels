@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageSquare, ShieldCheck, Clock, CheckCircle2 } from "lucide-react";
-import Palani from '../../assets/Golden hour at Palani temple.png';
+import Palani from "../../assets/Golden hour at Palani temple.png";
 
 const slides = [
   {
@@ -10,7 +10,6 @@ const slides = [
     highlight: "REFINED.",
     desc: "Experience the gold standard of luxury mobility in Palani. Punctuality meets premium comfort.",
     img: "https://wallpapercave.com/wp/wp9777779.jpg",
-    fit: "cover",
   },
   {
     id: 2,
@@ -18,24 +17,22 @@ const slides = [
     highlight: "EXPERT.",
     desc: "Specialized hill station travel to Kodaikanal. Our verified drivers ensure a smooth, safe ascent.",
     img: "https://images.stockcake.com/public/5/3/1/531b7aed-9c7c-4189-8792-1954d31e39aa/mountain-road-adventure-stockcake.jpg",
-    fit: "cover",
   },
   {
     id: 3,
     title: "SPIRITUAL",
     highlight: "SERENE.",
     desc: "Reliable temple circuits around Palani and Madurai. Focus on the divine while we drive.",
-    img: Palani,
-    fit: "contain",
+    img: Palani, // ✅ local image
   },
 ];
 
 const Hero = () => {
   const [index, setIndex] = useState(0);
 
-  // ✅ FIXED NUMBERS
+  // ✅ Correct Numbers
   const phoneNumber = "6381138159";
-  const fullPhone = "916381138159";
+  const whatsappNumber = "916381138159";
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,7 +42,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#050505] text-white overflow-hidden flex items-center pt-24 md:pt-28">
+    <section className="relative min-h-screen w-full bg-black text-white overflow-hidden flex items-center">
 
       {/* BACKGROUND */}
       <div className="absolute inset-0 z-0">
@@ -53,34 +50,23 @@ const Hero = () => {
           <motion.div
             key={slides[index].id}
             initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.7, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 1.2 }}
             className="absolute inset-0"
           >
-
-            {/* BLUR BG (only for contain images) */}
-            {slides[index].fit === "contain" && (
-              <img
-                src={slides[index].img}
-                className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-40"
-                alt=""
-              />
-            )}
-
-            {/* MAIN IMAGE */}
+            {/* IMAGE */}
             <img
               src={slides[index].img}
-              className={`w-full h-full ${
-                slides[index].fit === "contain"
-                  ? "object-contain"
-                  : "object-cover"
-              }`}
+              className="w-full h-full object-cover object-center"
               alt="Sana Travels"
             />
 
-            {/* OVERLAY */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent lg:bg-gradient-to-r lg:from-black lg:via-black/20 lg:to-transparent" />
+            {/* DARK OVERLAY */}
+            <div className="absolute inset-0 bg-black/50" />
+
+            {/* GRADIENT */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent lg:bg-gradient-to-r lg:from-black lg:via-black/20 lg:to-transparent" />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -94,10 +80,10 @@ const Hero = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.7 }}
               >
                 <h1 className="text-[42px] sm:text-6xl md:text-[90px] lg:text-[110px] font-semibold leading-[0.9] tracking-tight uppercase">
                   {slides[index].title} <br />
@@ -131,7 +117,7 @@ const Hero = () => {
             {/* WHATSAPP */}
             <motion.button
               whileTap={{ scale: 0.95 }}
-              onClick={() => window.open(`https://wa.me/${fullPhone}`, "_blank")}
+              onClick={() => window.open(`https://wa.me/${whatsappNumber}`, "_blank")}
               className="flex items-center justify-center gap-3 bg-white/10 border border-white/20 backdrop-blur text-white px-8 py-4 rounded-xl font-bold text-[11px] tracking-widest hover:bg-[#25D366] hover:border-[#25D366] transition-all"
             >
               <MessageSquare size={16} /> WHATSAPP
@@ -156,7 +142,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* SLIDE NAV */}
+      {/* SLIDER DOTS */}
       <div className="absolute right-6 bottom-10 flex flex-col items-end gap-4 z-30">
         <div className="flex gap-2">
           {slides.map((_, i) => (
