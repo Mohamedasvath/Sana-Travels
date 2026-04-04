@@ -123,7 +123,7 @@ const Hero = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => (window.location.href = `tel:+91${phoneNumber}`)}
-              className="flex items-center justify-center gap-3 bg-white text-black px-8 py-4 rounded-xl font-bold text-[11px] tracking-widest hover:bg-red-600 hover:text-white transition-all"
+              className="flex items-center justify-center gap-3 bg-white text-black px-8 py-4 rounded-xl font-bold text-[11px] tracking-widest hover:bg-green-600 hover:text-white transition-all"
             >
               <Phone size={16} /> CALL NOW
             </motion.button>
