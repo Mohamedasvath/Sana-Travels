@@ -23,17 +23,14 @@ const Trip = () => {
 
   const duplicated = [...trips, ...trips];
 
-  // ✅ Calculate dynamic width
   useEffect(() => {
     if (containerRef.current) {
       setWidth(containerRef.current.scrollWidth / 2);
     }
   }, []);
 
-  // ✅ Smooth auto scroll
   useEffect(() => {
     let controls;
-
     if (!isDragging && width > 0) {
       controls = animate(x, [x.get(), -width], {
         ease: "linear",
@@ -42,33 +39,34 @@ const Trip = () => {
         repeatType: "loop"
       });
     }
-
     return () => controls && controls.stop();
   }, [isDragging, width]);
 
-  // ✅ Reset loop properly
   useEffect(() => {
     const unsubscribe = x.on("change", (latest) => {
-      if (latest <= -width) {
-        x.set(0);
-      }
-      if (latest > 0) {
-        x.set(-width);
-      }
+      if (latest <= -width) x.set(0);
+      if (latest > 0) x.set(-width);
     });
-
     return () => unsubscribe();
   }, [width]);
 
   const handleBooking = (place) => {
     const msg = encodeURIComponent(
-      `Hi Sana Travels, I want to book a trip to ${place}`
+      `Hi Sana Travels Palani, I want to book a taxi trip from Palani to ${place}`
     );
     window.open(`https://wa.me/916381138159?text=${msg}`);
   };
 
   return (
-    <section className="bg-black text-white py-24 px-4 md:px-10 overflow-hidden">
+    <section
+      className="bg-black text-white py-24 px-4 md:px-10 overflow-hidden"
+      aria-label="Sana Travels Palani taxi trips to Kodaikanal Madurai Coimbatore Ooty"
+    >
+      {/* ✅ Hidden SEO Heading */}
+      <h2 className="sr-only">
+        Taxi service from Palani to Kodaikanal, Madurai, Coimbatore, Ooty and nearby cities
+      </h2>
+
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}
@@ -76,15 +74,16 @@ const Trip = () => {
           <span className="text-red-500 text-xs tracking-widest uppercase flex items-center gap-2 mb-3">
             <Zap size={14} /> Premium Trips
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold">
-            Explore Top Destinations
-          </h2>
+
+          {/* ✅ SEO Heading */}
+          <h3 className="text-3xl md:text-5xl font-extrabold">
+            Top Taxi Routes from Palani
+          </h3>
         </div>
 
         {/* CAROUSEL */}
         <div className="relative overflow-hidden">
 
-          {/* FADE EDGES */}
           <div className="absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-black to-transparent z-10" />
           <div className="absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-black to-transparent z-10" />
 
@@ -92,8 +91,8 @@ const Trip = () => {
             ref={containerRef}
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: -width, right: 0 }} // ✅ FIXED
-            dragElastic={0.05} // smooth drag
+            dragConstraints={{ left: -width, right: 0 }}
+            dragElastic={0.05}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => setIsDragging(false)}
             className="flex gap-5 cursor-grab active:cursor-grabbing"
@@ -106,7 +105,8 @@ const Trip = () => {
                 {/* IMAGE */}
                 <img
                   src={trip.image}
-                  alt={trip.place}
+                  alt={`Taxi service from Palani to ${trip.place} - Sana Travels`}
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
 
@@ -126,8 +126,13 @@ const Trip = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold">{trip.place}</h3>
-                  <p className="text-xs text-gray-400 mb-2">{trip.subtitle}</p>
+                  <h4 className="text-xl font-bold">
+                    {trip.place} Taxi
+                  </h4>
+
+                  <p className="text-xs text-gray-400 mb-2">
+                    Taxi service from Palani to {trip.place}
+                  </p>
 
                   <div className="flex gap-3 text-[10px] text-gray-300 mb-3">
                     <span className="flex items-center gap-1">
@@ -139,10 +144,11 @@ const Trip = () => {
                   </div>
 
                   <button
+                    aria-label={`Book taxi from Palani to ${trip.place}`}
                     onClick={() => handleBooking(trip.place)}
                     className="bg-white text-black py-2 rounded-full text-xs font-bold flex items-center justify-center gap-2 hover:bg-red-600 hover:text-white transition"
                   >
-                    Book Now <ArrowRight size={14} />
+                    Book Taxi <ArrowRight size={14} />
                   </button>
 
                 </div>
