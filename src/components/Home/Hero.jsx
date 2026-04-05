@@ -23,14 +23,13 @@ const slides = [
     title: "SPIRITUAL",
     highlight: "SERENE.",
     desc: "Reliable temple circuits around Palani and Madurai. Focus on the divine while we drive.",
-    img: Palani, // ✅ local image
+    img: Palani,
   },
 ];
 
 const Hero = () => {
   const [index, setIndex] = useState(0);
 
-  // ✅ Correct Numbers
   const phoneNumber = "6381138159";
   const whatsappNumber = "916381138159";
 
@@ -43,6 +42,11 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen w-full bg-black mt-15 text-white overflow-hidden flex items-center">
+
+      {/* ✅ SEO H1 (hidden for Google) */}
+      <h1 className="sr-only">
+        Sana Travels Palani - Taxi Service, Tours and Travels, 24/7 Cab Booking in Palani
+      </h1>
 
       {/* BACKGROUND */}
       <div className="absolute inset-0 z-0">
@@ -59,7 +63,7 @@ const Hero = () => {
             <img
               src={slides[index].img}
               className="w-full h-full object-cover object-center"
-              alt="Sana Travels"
+              alt="Sana Travels Palani taxi service, tours and travels, 24/7 cab service in Palani"
             />
 
             {/* DARK OVERLAY */}
@@ -85,7 +89,7 @@ const Hero = () => {
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.7 }}
               >
-                <h1 className="text-[42px] sm:text-6xl md:text-[90px] lg:text-[110px] font-semibold leading-[0.9] tracking-tight uppercase">
+                <h2 className="text-[42px] sm:text-6xl md:text-[90px] lg:text-[110px] font-semibold leading-[0.9] tracking-tight uppercase">
                   {slides[index].title} <br />
                   <span
                     className="text-transparent italic font-light block py-2"
@@ -93,10 +97,10 @@ const Hero = () => {
                   >
                     {slides[index].highlight}
                   </span>
-                </h1>
+                </h2>
 
                 <p className="mt-6 text-white/80 text-sm md:text-lg max-w-md leading-relaxed border-l-2 border-red-600 pl-4">
-                  {slides[index].desc}
+                  {slides[index].desc} Trusted Palani taxi service, tours and travels with 24/7 cab booking.
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -107,6 +111,7 @@ const Hero = () => {
 
             {/* CALL */}
             <motion.button
+              aria-label="Call Sana Travels Palani Taxi Service"
               whileTap={{ scale: 0.95 }}
               onClick={() => (window.location.href = `tel:+91${phoneNumber}`)}
               className="flex items-center justify-center gap-3 bg-white text-black px-8 py-4 rounded-xl font-bold text-[11px] tracking-widest hover:bg-green-600 hover:text-white transition-all"
@@ -116,6 +121,7 @@ const Hero = () => {
 
             {/* WHATSAPP */}
             <motion.button
+              aria-label="Chat on WhatsApp with Sana Travels Palani"
               whileTap={{ scale: 0.95 }}
               onClick={() => window.open(`https://wa.me/${whatsappNumber}`, "_blank")}
               className="flex items-center justify-center gap-3 bg-white/10 border border-white/20 backdrop-blur text-white px-8 py-4 rounded-xl font-bold text-[11px] tracking-widest hover:bg-[#25D366] hover:border-[#25D366] transition-all"
@@ -149,6 +155,7 @@ const Hero = () => {
             <button
               key={i}
               onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
               className={`h-1 rounded-full transition-all ${
                 index === i ? "w-8 bg-red-600" : "w-2 bg-white/30"
               }`}
