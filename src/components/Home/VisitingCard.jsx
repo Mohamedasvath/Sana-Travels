@@ -7,7 +7,6 @@ const VisitingCard = () => {
     name: "Sana Travels",
     owner: "Sajakan",
     phone1: "+916381138159",
-    phone2: "+918247730743",
     email: "sanatravels@gmail.com",
     address: "Ayakudi, Palani, Tamil Nadu"
   };
